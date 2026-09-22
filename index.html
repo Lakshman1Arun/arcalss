@@ -3,29 +3,76 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-    <title>Web AR</title>
+    <title>AR Demo</title>
 
-    <!-- A-Frame -->
-    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script type="module"
+        src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js">
+    </script>
 
-    <!-- AR.js -->
-    <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            text-align: center;
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 75vh;
+            background: white;
+        }
+
+        #ar-button {
+            margin-top: 20px;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            background: #111;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #ar-button:active {
+            transform: scale(0.97);
+        }
+    </style>
 </head>
 
-<body style="margin: 0; overflow: hidden;">
+<body>
 
-    <a-scene embedded arjs="sourceType: webcam;">
+    <model-viewer
+        id="model"
+        src="model.glb"
+        alt="3D Model"
+        camera-controls
+        auto-rotate
+        ar
+        ar-modes="webxr scene-viewer quick-look"
+        shadow-intensity="1">
 
-        <!-- Your 3D model -->
-        <a-entity gltf-model="bmw.glb" position="0 0 0" scale="1 1 1">
-        </a-entity>
+        <button id="ar-button">
+            View in AR
+        </button>
 
-        <!-- Camera -->
-        <a-camera></a-camera>
+    </model-viewer>
 
-    </a-scene>
+    <script>
+        const model = document.querySelector("#model");
+        const button = document.querySelector("#ar-button");
+
+        button.addEventListener("click", () => {
+            model.activateAR();
+        });
+    </script>
 
 </body>
 
